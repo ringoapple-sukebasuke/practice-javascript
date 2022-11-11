@@ -15,6 +15,8 @@ points.dist = function() {
   return Math.sqrt(a*a + b*b);
 };
 
+// points.dist()
+
 function ads(x) {
   if (x >= 0) {
     return x;
@@ -23,6 +25,7 @@ function ads(x) {
     return -x;
   }
 }
+// ads(10) === ads(-10)
 
 function sum(array) {
   let sum = 0;
@@ -31,6 +34,7 @@ function sum(array) {
   }
   return sum;
 }
+// sum(primes)
 
 function factorial(n) {
   let product = 1;
@@ -40,6 +44,7 @@ function factorial(n) {
   }
   return product;
 }
+// factorial(5)
 
 function factorial2(n) {
   let i, product = 1;
@@ -47,3 +52,21 @@ function factorial2(n) {
     product *= i;
     return product;
 }
+// factorial2(5)
+
+
+class Point {
+  constructor(x, y ) {
+    this.x = x;
+    this.y = y;
+  }
+
+  distance() {
+    return Math.sqrt(
+      this.x * this.x + this.y * this.y
+    );
+  }
+}
+let p = new Point(2,2);
+
+// p.distance()
