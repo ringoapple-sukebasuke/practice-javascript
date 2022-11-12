@@ -153,3 +153,13 @@ async function histogramFromStdin() {
 // 標準入力からHistogramオブジェクトを生成し、ヒストグラムを表示する。
 histogramFromStdin().then(histogram => { console.log(histogram.toString());
 });
+
+// 正規表現
+let text = "testing: 1, 2, 3";
+let pattern = /\d+/g;
+
+pattern.test(text); //true: マッチする部分が存在する
+text.search(pattern); //9: 最初にマッチした文字の位置
+text.match(pattern); //["1", "2", "3"]: 全てのマッチを含む配列
+text.replace(pattern, "#"); //"testing : #, #, # "  置き換えられる
+text.split(/\D+/); //["", "1", "2", "3"]: 数字以外の文字で配列に分割
