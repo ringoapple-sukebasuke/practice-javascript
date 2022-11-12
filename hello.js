@@ -70,3 +70,86 @@ class Point {
 let p = new Point(2,2);
 
 // p.distance()
+
+// 文字頻度ヒストグラムを計算するプログラム
+class DefaultMap extends Map {
+  constructor(defaultValue) {
+    super();
+    this.defaultValue = defaultValue;
+  }
+
+  get(key) {
+    if (this.has(key)) {
+      return super.get(key);
+    }
+    else {
+      return this.defaultValue;
+    }
+  }
+}
+
+// このクラスは文字頻度ヒストグラムを計算し、表示する
+class Histogram {
+  constructor() {
+    this.letterCounts = new DefaultMap(0);
+    this.totalLetters = 0;
+  }
+  // この関数は、textの中の文字でヒストグラムを更新する
+  add(text) {
+    text = text.replace(/\s/g, "").toUpperCase();
+
+    // テキストの中の文字をループする
+    for(let character of text) {
+      let count = this.letterCounts.get(character);
+      this.letterCounts.set(character, count+1);
+      this.totalLetters++;
+    }
+  }
+  // ヒストグラムを文字列に変換して、ASCIIグラフィックとして表示する
+  toString() {
+    let entries = [...this.LetterCounts];
+
+    // 文字数順にソートする。文字数が同じの場合は、アルファベット順でソートする
+    entries.sort((a, b) => {
+      if (a[1] === b[1]) {
+        return a[0] < b[0] ? -1 : 1;
+      } else {
+        return b[1] - a[1];
+      }
+    });
+    
+    // 文字列をパーセントに変換する
+    for(let entry of entries) {
+      entry[1] = entry[1] /this.totalLetters*100;
+    }
+
+    // 1%未満の文字は表示しない
+    entries = entries.filter(entry => entry[1] >= 1);
+
+    // 各項目を一行のテキストに変換する。
+    let lines = entries.map (
+      ([l,n]) => `${"#".repeat(Math.round(n))} ${n.toFixed(2)}%`
+    );
+
+    // 各行を改行文字で区切って結合し、結合した文字列を返す
+    return lines.join("\n");
+  }
+}
+
+// このasync関数はHistgramオブジェクトを生成する。
+// 表示入力からテキストを非同期に読み出し、読み出したテキストをヒストグラムに
+// 追加する。テキストを最後まで読み出したら、ヒストグラムを返す。
+
+async function histogramFromStdin() {
+  Process.stdin.setEncoding("utf-8");
+  let histogram = new Histogram();
+  for await (let chunk of process.stdin) {
+    histogram.add(chunk);
+  }
+  return histogram;
+}
+
+// この最後の一行がこのプログラムのメイン部分
+// 標準入力からHistogramオブジェクトを生成し、ヒストグラムを表示する。
+histogramFromStdin().then(histogram => { console.log(histogram.toString());
+});
