@@ -163,3 +163,8 @@ text.search(pattern); //9: 最初にマッチした文字の位置
 text.match(pattern); //["1", "2", "3"]: 全てのマッチを含む配列
 text.replace(pattern, "#"); //"testing : #, #, # "  置き換えられる
 text.split(/\D+/); //["", "1", "2", "3"]: 数字以外の文字で配列に分割
+
+// 分割代入
+let [x, y] = [1, 2];
+[x, y] = [x + 1, y + 1];
+[x, y] = [y, x];
